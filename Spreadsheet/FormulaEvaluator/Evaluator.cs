@@ -23,6 +23,15 @@ namespace FormulaEvaluator
 
             string[] substrings = Regex.Split(exp, "(\\()|(\\))|(-)|(\\+)|(\\*)|(/)");
 
+            if (substrings.Length <= 1)
+            {
+                if (string.IsNullOrEmpty(substrings[0]))
+                {
+                    // If the expression is empty
+                    throw new ArgumentException("Invalid expression given");
+                }
+            }
+
             foreach (string s in substrings)
             {
                 string newS = s.Trim();
@@ -91,9 +100,16 @@ namespace FormulaEvaluator
                             {
                                 PushToValues(values, operators);
                             }
+                            else
+                            {
+                                throw new ArgumentException("Invalid expression given");
+                            }
 
-                            string o = operators.Pop();
-                            if (o != "(")
+                            if (operators.Count > 0)
+                            {
+                                string o = operators.Pop();
+                            }
+                            else
                             {
                                 throw new ArgumentException("There isn't a closing parenthesis where expected");
                             }
@@ -173,10 +189,20 @@ namespace FormulaEvaluator
         /// <param name="newRightSide"> If using the variable without pushing to stack first </param>
         private static void PushToValues(Stack<int> vals, Stack<string> ops, int newRightSide = -1)
         {
+            if (vals.Count == 0)
+            {
+                throw new ArgumentException("Invalid expression given");
+            }
+
             int rightSide = vals.Pop();
             int leftSide;
             if (newRightSide == -1)
-                leftSide = vals.Pop();
+            {
+                if (vals.Count > 0)
+                    leftSide = vals.Pop();
+                else
+                    throw new ArgumentException("Invalid expression given");
+            }
             else
             {
                 leftSide = rightSide;
@@ -203,6 +229,9 @@ namespace FormulaEvaluator
                 case "*":
                     return leftSide * rightSide;
                 case "/":
+                    if (rightSide == 0)
+                        throw new ArgumentException("Cannot divide by zero");
+
                     return leftSide / rightSide;
             }
 

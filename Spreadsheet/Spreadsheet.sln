@@ -5,7 +5,9 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormulaEvaluator", "FormulaEvaluator\FormulaEvaluator.csproj", "{F29183A8-5983-4915-8E69-3642BD90D7BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpreadsheetTester", "SpreadsheetTester\SpreadsheetTester.csproj", "{BEAAB874-3C8F-4CAF-9152-2CBC91B7DCF3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpreadsheetTester", "SpreadsheetTester\SpreadsheetTester.csproj", "{BEAAB874-3C8F-4CAF-9152-2CBC91B7DCF3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{260D10EA-C680-4B4A-92EA-08449FCBAA0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{BEAAB874-3C8F-4CAF-9152-2CBC91B7DCF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEAAB874-3C8F-4CAF-9152-2CBC91B7DCF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEAAB874-3C8F-4CAF-9152-2CBC91B7DCF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{260D10EA-C680-4B4A-92EA-08449FCBAA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{260D10EA-C680-4B4A-92EA-08449FCBAA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{260D10EA-C680-4B4A-92EA-08449FCBAA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{260D10EA-C680-4B4A-92EA-08449FCBAA0D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
