@@ -53,6 +53,10 @@ public class DependencyGraphTests
         Assert.IsFalse(t.GetDependents("x").GetEnumerator().MoveNext());
     }
 
+
+    /// <summary>
+    /// Simply checks if each letter correctly assigns the dependents/dependees of that letter
+    /// </summary>
     [TestMethod()]
     public void SimpleCheck()
     {
@@ -160,6 +164,7 @@ public class DependencyGraphTests
         Assert.IsFalse(e.MoveNext());
     }
 
+
     /// <summary>
     ///Non-empty graph contains something
     ///</summary>
@@ -198,6 +203,7 @@ public class DependencyGraphTests
         Assert.AreEqual("b", e.Current);
         Assert.IsFalse(e.MoveNext());
     }
+
 
     /// <summary>
     /// Removes from a an empty graph, then a non-empty graph
