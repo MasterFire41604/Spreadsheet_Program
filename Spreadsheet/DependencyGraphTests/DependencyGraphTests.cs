@@ -53,6 +53,28 @@ public class DependencyGraphTests
         Assert.IsFalse(t.GetDependents("x").GetEnumerator().MoveNext());
     }
 
+    [TestMethod()]
+    public void SimpleCheck()
+    {
+        DependencyGraph t = new DependencyGraph();
+        t.AddDependency("a", "b");
+        t.AddDependency("a", "c");
+        t.AddDependency("c", "b");
+        t.AddDependency("b", "d");
+
+        Assert.IsTrue(t.HasDependents("a"));
+        Assert.IsFalse(t.HasDependees("a"));
+
+        Assert.IsTrue(t.HasDependents("b"));
+        Assert.IsTrue(t.HasDependees("b"));
+
+        Assert.IsTrue(t.HasDependents("c"));
+        Assert.IsTrue(t.HasDependees("c"));
+
+        Assert.IsFalse(t.HasDependents("d"));
+        Assert.IsTrue(t.HasDependees("d"));
+    }
+
 
     /// <summary>
     ///Replace on an empty DG shouldn't fail
@@ -62,7 +84,7 @@ public class DependencyGraphTests
     {
         DependencyGraph t = new DependencyGraph();
         t.AddDependency("x", "y");
-        Assert.AreEqual(t.NumDependencies, 1);
+        Assert.AreEqual(1, t.NumDependencies);
         t.RemoveDependency("x", "y");
         t.ReplaceDependents("x", new HashSet<string>());
         t.ReplaceDependees("y", new HashSet<string>());
@@ -177,10 +199,17 @@ public class DependencyGraphTests
         Assert.IsFalse(e.MoveNext());
     }
 
+    /// <summary>
+    /// Removes from a an empty graph, then a non-empty graph
+    /// </summary>
     [TestMethod()]
     public void RemoveTest()
     {
         DependencyGraph t = new DependencyGraph();
+
+        t.RemoveDependency("a", "b");
+
+        t.AddDependency("a", "b");
         t.AddDependency("a", "b");
         t.AddDependency("a", "c");
         t.AddDependency("c", "b");
@@ -256,7 +285,7 @@ public class DependencyGraphTests
         DependencyGraph t = new DependencyGraph();
 
         // A bunch of strings to use
-        const int SIZE = 5;
+        const int SIZE = 200;
         string[] letters = new string[SIZE];
         for (int i = 0; i < SIZE; i++)
         {
@@ -321,6 +350,8 @@ public class DependencyGraphTests
         {
             Assert.IsTrue(dents[i].SetEquals(new HashSet<string>(t.GetDependents(letters[i]))));
             Assert.IsTrue(dees[i].SetEquals(new HashSet<string>(t.GetDependees(letters[i]))));
+
+            Assert.AreEqual(dees[i].Count, t.NumDependees(letters[i]));
         }
     }
 }

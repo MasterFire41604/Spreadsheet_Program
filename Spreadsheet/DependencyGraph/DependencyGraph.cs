@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Data;
-
-namespace SpreadsheetUtilities;
+﻿namespace SpreadsheetUtilities;
 
 /// <summary>
 /// (s1,t1) is an ordered pair of strings
@@ -64,7 +60,10 @@ public class DependencyGraph
     /// </summary>
     public int NumDependees(string s)
     {
-        return dependees[s].Count;
+        if (dependees.ContainsKey(s))
+            return dependees[s].Count;
+        else
+            return 0;
     }
 
 
@@ -73,7 +72,10 @@ public class DependencyGraph
     /// </summary>
     public bool HasDependents(string s)
     {
-        return dependents[s].Count > 0;
+        if (dependents.ContainsKey(s))
+            return dependents[s].Count > 0;
+        else
+            return false;
     }
 
 
@@ -82,7 +84,10 @@ public class DependencyGraph
     /// </summary>
     public bool HasDependees(string s)
     {
-        return dependees[s].Count > 0;
+        if (dependees.ContainsKey(s))
+            return dependees[s].Count > 0;
+        else
+            return false;
     }
 
 
@@ -126,19 +131,20 @@ public class DependencyGraph
     /// <param name="t"> t cannot be evaluated until s is</param>
     public void AddDependency(string s, string t)
     {
-        totalDependencies++;
         List<string> list;
 
         if (!dependents.ContainsKey(s))
         {
+            totalDependencies++;
             list = new List<string>() { t };
             dependents.Add(s, list);
         }
         else
         {
             list = dependents[s];
-            if (!list.Contains(s))
+            if (!list.Contains(t))
             {
+                totalDependencies++;
                 list.Add(t);
                 ReplaceDependents(s, list);
             }
@@ -168,21 +174,29 @@ public class DependencyGraph
     /// <param name="t"></param>
     public void RemoveDependency(string s, string t)
     {
-        totalDependencies--;
-        List<string> list = dependents[s];
+        List<string> list;
 
-        if (list.Contains(t))
+        if (dependents.ContainsKey(s))
         {
-            list.Remove(t);
-            ReplaceDependents(s, list);
+            list = dependents[s];
+
+            if (list.Contains(t))
+            {
+                totalDependencies--;
+                list.Remove(t);
+                ReplaceDependents(s, list);
+            }
         }
 
-        list = dependees[t];
-
-        if (list.Contains(s))
+        if (dependees.ContainsKey(t))
         {
-            list.Remove(s);
-            ReplaceDependees(t, list);
+            list = dependees[t];
+
+            if (list.Contains(s))
+            {
+                list.Remove(s);
+                ReplaceDependees(t, list);
+            }
         }
     }
 
