@@ -4,7 +4,7 @@
     {
         static void Main(string[] args)
         {
-            string expression = "5+5";
+            string expression = "(1*1)-2/2";
 
             var evaluate = FormulaEvaluator.Evaluator.Evaluate(expression, AnyVariables);
             Console.WriteLine(evaluate);
