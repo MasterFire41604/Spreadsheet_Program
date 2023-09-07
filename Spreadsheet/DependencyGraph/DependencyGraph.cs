@@ -207,25 +207,30 @@ public class DependencyGraph
     /// </summary>
     public void ReplaceDependents(string s, IEnumerable<string> newDependents)
     {
-        dependents.Remove(s);
-        dependents.Add(s, newDependents.ToList());
-
-        foreach (string d in newDependents)
+        if (dependents.ContainsKey(s))
         {
-            if (dependees.ContainsKey(d))
+            totalDependencies -= dependents[s].Count;
+            dependents.Remove(s);
+            dependents.Add(s, newDependents.ToList());
+            totalDependencies += newDependents.Count();
+
+            foreach (string d in newDependents)
             {
-                var list = dependees[d];
-                if (!list.Contains(s))
+                if (dependees.ContainsKey(d))
                 {
-                    list.Add(s);
-                    dependees.Remove(d);
+                    var list = dependees[d];
+                    if (!list.Contains(s))
+                    {
+                        list.Add(s);
+                        dependees.Remove(d);
+                        dependees.Add(d, list);
+                    }
+                }
+                else
+                {
+                    var list = new List<string>() { s };
                     dependees.Add(d, list);
                 }
-            }
-            else
-            {
-                var list = new List<string>() { s };
-                dependees.Add(d, list);
             }
         }
     }
@@ -237,25 +242,30 @@ public class DependencyGraph
     /// </summary>
     public void ReplaceDependees(string s, IEnumerable<string> newDependees)
     {
-        dependees.Remove(s);
-        dependees.Add(s, newDependees.ToList());
-
-        foreach (string d in newDependees)
+        if (dependees.ContainsKey(s))
         {
-            if (dependents.ContainsKey(d))
+            totalDependencies -= dependees[s].Count;
+            dependees.Remove(s);
+            dependees.Add(s, newDependees.ToList());
+            totalDependencies += newDependees.Count();
+
+            foreach (string d in newDependees)
             {
-                var list = dependents[d];
-                if (!list.Contains(s))
+                if (dependents.ContainsKey(d))
                 {
-                    list.Add(s);
-                    dependents.Remove(d);
+                    var list = dependents[d];
+                    if (!list.Contains(s))
+                    {
+                        list.Add(s);
+                        dependents.Remove(d);
+                        dependents.Add(d, list);
+                    }
+                }
+                else
+                {
+                    var list = new List<string>() { s };
                     dependents.Add(d, list);
                 }
-            }
-            else
-            {
-                var list = new List<string>() { s };
-                dependents.Add(d, list);
             }
         }
     }

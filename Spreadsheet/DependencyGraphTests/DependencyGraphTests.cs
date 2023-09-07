@@ -105,6 +105,21 @@ public class DependencyGraphTests
         t.ReplaceDependees("y", new HashSet<string>());
     }
 
+    /// <summary>
+    /// Replaces dependents of a variable with a different number of dependents than there was previously, check for number of dependencies
+    /// </summary>
+    [TestMethod()]
+    public void ReplaceUpdatesDepenciesNum()
+    {
+        DependencyGraph t = new();
+        t.AddDependency("a", "b");
+        t.AddDependency("a", "c");
+        t.AddDependency("a", "d");
+        t.AddDependency("b", "d");
+
+        t.ReplaceDependents("a", new List<string>() { "z", "y", "x", "w", "v"});
+        Assert.AreEqual(6, t.NumDependencies);
+    }
 
 
     ///<summary>
