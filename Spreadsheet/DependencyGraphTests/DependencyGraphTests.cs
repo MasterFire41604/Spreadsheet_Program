@@ -33,6 +33,17 @@ public class DependencyGraphTests
         Assert.AreEqual(0, t.NumDependencies);
     }
 
+    /// <summary>
+    /// Should treat empty strings as variables as any other variable
+    /// </summary>
+    [TestMethod()]
+    public void AddEmptyStrings()
+    {
+        DependencyGraph t = new();
+        t.AddDependency("", "");
+        Assert.AreEqual(1, t.NumDependencies);
+    }
+
 
     /// <summary>
     ///Empty graph should contain nothing
