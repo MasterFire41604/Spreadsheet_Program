@@ -426,15 +426,6 @@ public class Formula
 
         if (other is not null)
         {
-            //string[] substrings = GetTokens(_formula).ToArray();
-            //string[] substringsObj = GetTokens(other.ToString()).ToArray();
-            //int charsEqual = 0;
-
-            //if (substrings.Length != substringsObj.Length)
-            //{
-            //    return false;
-            //}
-
             // The formula was constructed in such a way where it will always be normalized, with no whitespace, and calculated doubles if necessary (1.0 == 1 || 1.0e-1 == 0.1)
             // This means that no matter what different formulae you use, they will all either be the exact same or not the same no matter what.
             // This is why just checking the hashcode of the two formulae has the same result as checking each character individually.
@@ -444,56 +435,6 @@ public class Formula
             }
 
             return true;
-
-            //for (int i = 0; i < substrings.Length; i++)
-            //{
-            //    if (double.TryParse(substrings[i], out _))
-            //    {
-            //        if (double.TryParse(substringsObj[i], out _) && (double.Parse(substrings[i]) == double.Parse(substringsObj[i])))
-            //        {
-            //            charsEqual++;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        switch (substrings[i])
-            //        {
-            //            case "+":
-            //                if (substringsObj[i].Equals("+"))
-            //                    charsEqual++;
-            //                break;
-            //            case "-":
-            //                if (substringsObj[i].Equals("-"))
-            //                    charsEqual++;
-            //                break;
-            //            case "*":
-            //                if (substringsObj[i].Equals("*"))
-            //                    charsEqual++;
-            //                break;
-            //            case "/":
-            //                if (substringsObj[i].Equals("/"))
-            //                    charsEqual++;
-            //                break;
-            //            case "(":
-            //                if (substringsObj[i].Equals("("))
-            //                    charsEqual++;
-            //                break;
-            //            case ")":
-            //                if (substringsObj[i].Equals(")"))
-            //                    charsEqual++;
-            //                break;
-            //            default:
-            //                if (substrings[i].Equals(substringsObj[i]))
-            //                    charsEqual++;
-            //                break;
-            //        }
-            //    }
-            //}
-
-            //if (charsEqual == substrings.Length)
-            //    return true;
-            //else
-            //    return false;
         }
 
         return false;

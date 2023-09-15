@@ -12,105 +12,105 @@ namespace FormulaTests
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestEmptyFormula()
         {
-            Formula f = new Formula("");
+            new Formula("");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestNumberAfterNumberNoOperator()
         {
-            Formula f = new Formula("5 5");
+            new Formula("5 5");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestOpeningOperatorPlus()
         {
-            Formula f = new Formula("+");
+            new Formula("+");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestOpeningOperatorMinus()
         {
-            Formula f = new Formula("-");
+            new Formula("-");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestOpeningOperatorMult()
         {
-            Formula f = new Formula("*");
+            new Formula("*");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestOpeningOperatorDiv()
         {
-            Formula f = new Formula("/");
+            new Formula("/");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestOpeningOperatorCloseParen()
         {
-            Formula f = new Formula(")");
+            new Formula(")");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestOperatorAfterOperator()
         {
-            Formula f = new Formula("5 + + 5");
+            new Formula("5 + + 5");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestNumberAfterCloseParen()
         {
-            Formula f = new Formula("(5 + 5) 2");
+            new Formula("(5 + 5) 2");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestEndOperatorNotCloseParen()
         {
-            Formula f = new Formula("21 +");
+            new Formula("21 +");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestOpenParenAfterCloseParen()
         {
-            Formula f = new Formula("(5 + 5)(5 + 5)");
+            new Formula("(5 + 5)(5 + 5)");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestMoreCloseParenThanOpenParen()
         {
-            Formula f = new Formula("5 + 5)");
+            new Formula("5 + 5)");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestMoreOpenParenThanCloseParen()
         {
-            Formula f = new Formula("(5 + 5");
+            new Formula("(5 + 5");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestInvalidVariable()
         {
-            Formula f = new Formula("5 + 2A");
+            new Formula("5 + 2A");
         }
 
         [TestMethod()]
         [ExpectedException(typeof(FormulaFormatException))]
         public void TestInvalidToken()
         {
-            Formula f = new Formula("5 + jka54_&");
+            new Formula("5 + jka54_&");
         }
 
         [TestMethod()]
@@ -144,7 +144,7 @@ namespace FormulaTests
         [TestMethod()]
         public void TestValidVariable()
         {
-            Formula f = new Formula("5 + a2");
+            new Formula("5 + a2");
         }
 
         [TestMethod()]
