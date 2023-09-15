@@ -100,10 +100,6 @@ namespace FormulaEvaluator
                             {
                                 PushToValues(values, operators);
                             }
-                            else
-                            {
-                                throw new ArgumentException("Invalid expression given");
-                            }
 
                             if (operators.Count > 0)
                             {
