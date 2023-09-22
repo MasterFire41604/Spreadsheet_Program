@@ -11,7 +11,7 @@ namespace SS
     public class Spreadsheet : AbstractSpreadsheet
     {
         private readonly Dictionary<string, Cell> cells;
-        private DependencyGraph graph;
+        private readonly DependencyGraph graph;
 
         /// <summary>
         /// Creates a new Spreadsheet that can hold any number of cells
@@ -55,6 +55,7 @@ namespace SS
                 cells.Add(name, new Cell(number.ToString(), 1));
             }
 
+            // Removes any previous dependencies between the given cell and its dependees
             foreach (string d in graph.GetDependees(name))
             {
                 graph.RemoveDependency(d, name);
@@ -76,6 +77,7 @@ namespace SS
                 cells.Add(name, new Cell(text, -1));
             }
 
+            // Removes any previous dependencies between the given cell and its dependees
             foreach (string d in graph.GetDependees(name))
             {
                 graph.RemoveDependency(d, name);
@@ -97,6 +99,7 @@ namespace SS
                 cells.Add(name, new Cell(formula.ToString(), 0));
             }
 
+            // Removes any previous dependencies between the given cell and its dependees
             foreach (string d in graph.GetDependees(name))
             {
                 graph.RemoveDependency(d, name);

@@ -178,7 +178,9 @@ public abstract class AbstractSpreadsheet
     /// <summary>
     /// A helper for the GetCellsToRecalculate method.
     /// 
-    ///   -- You should fully comment what is going on below --
+    /// This method cycles through all the dependents of the given cell. Eventually "changed" will include the cell itself, and all its dependents in the correct ordering.
+    /// If the dependents of the cell, or the dependents of the dependents of the cell is the cell, then there is a cycle in the dependencies.
+    /// If there is a dependency cycle, throw a circular exception.
     /// </summary>
     private void Visit(string start, string name, ISet<string> visited, LinkedList<string> changed)
     {
