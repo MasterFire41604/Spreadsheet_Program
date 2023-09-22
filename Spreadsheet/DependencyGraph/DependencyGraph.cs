@@ -29,8 +29,8 @@
 /// </summary>
 public class DependencyGraph
 {
-    private Dictionary<string, List<string>> dependents;
-    private Dictionary<string, List<string>> dependees;
+    private Dictionary<string, HashSet<string>> dependents;
+    private Dictionary<string, HashSet<string>> dependees;
     private int totalDependencies;
 
     /// <summary>
@@ -38,8 +38,8 @@ public class DependencyGraph
     /// </summary>
     public DependencyGraph()
     {
-        dependents = new Dictionary<string, List<string>>();
-        dependees = new Dictionary<string, List<string>>();
+        dependents = new Dictionary<string, HashSet<string>>();
+        dependees = new Dictionary<string, HashSet<string>>();
         totalDependencies = 0;
     }
 
@@ -131,12 +131,12 @@ public class DependencyGraph
     /// <param name="t"> t cannot be evaluated until s is</param>
     public void AddDependency(string s, string t)
     {
-        List<string> list;
+        HashSet<string> list;
 
         if (!dependents.ContainsKey(s))
         {
             totalDependencies++;
-            list = new List<string>() { t };
+            list = new HashSet<string>() { t };
             dependents.Add(s, list);
         }
         else
@@ -152,7 +152,7 @@ public class DependencyGraph
 
         if (!dependees.ContainsKey(t))
         {
-            list = new List<string>() { s };
+            list = new HashSet<string>() { s };
             dependees.Add(t, list);
         }
         else
@@ -174,7 +174,7 @@ public class DependencyGraph
     /// <param name="t"></param>
     public void RemoveDependency(string s, string t)
     {
-        List<string> list;
+        HashSet<string> list;
 
         if (dependents.ContainsKey(s))
         {
@@ -211,7 +211,7 @@ public class DependencyGraph
         {
             totalDependencies -= dependents[s].Count;
             dependents.Remove(s);
-            dependents.Add(s, newDependents.ToList());
+            dependents.Add(s, newDependents.ToHashSet());
             totalDependencies += newDependents.Count();
 
             foreach (string d in newDependents)
@@ -228,7 +228,7 @@ public class DependencyGraph
                 }
                 else
                 {
-                    var list = new List<string>() { s };
+                    var list = new HashSet<string>() { s };
                     dependees.Add(d, list);
                 }
             }
@@ -246,7 +246,7 @@ public class DependencyGraph
         {
             totalDependencies -= dependees[s].Count;
             dependees.Remove(s);
-            dependees.Add(s, newDependees.ToList());
+            dependees.Add(s, newDependees.ToHashSet());
             totalDependencies += newDependees.Count();
 
             foreach (string d in newDependees)
@@ -263,7 +263,7 @@ public class DependencyGraph
                 }
                 else
                 {
-                    var list = new List<string>() { s };
+                    var list = new HashSet<string>() { s };
                     dependents.Add(d, list);
                 }
             }
