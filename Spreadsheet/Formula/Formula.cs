@@ -65,7 +65,7 @@ public class Formula
     {
         var tokens = GetTokens(formula).ToList();
         string newFormula = "";
-        int tokenCount = tokens.Count, openPar = 0, closePar = 0;
+        int tokenCount = tokens.Count, openPar = 0, closePar = 0, newFormulaPointer = 0;
         _variables = new List<string>();
 
         if (tokenCount == 0)
@@ -73,7 +73,7 @@ public class Formula
             throw new FormulaFormatException("Cannot input an empty expression");
         }
 
-        for (int i = 0; i < tokenCount; i++)
+        for (int i = 0; i < tokenCount; i++, newFormulaPointer++)
         {
             string operPattern = @"[+\-*\/()]{1}";
             string operFollowPattern = @"[+\-*\/]{1}";
@@ -118,6 +118,12 @@ public class Formula
 
                 if (newT.Equals("("))
                 {
+
+                    if (i > 0 && double.TryParse(newFormula.ElementAt(newFormulaPointer - 1).ToString(), out _))
+                    {
+                        // There is a number right before an opening parenthesis, so throw exception
+                        throw new FormulaFormatException("Invalid expression given. Cannot have an opening parenthesis after a number");
+                    }
                     openPar += 1;
                 }
                 if (newT.Equals(")"))
@@ -145,6 +151,7 @@ public class Formula
                     }
 
                     newFormula += normalize(newT);
+                    newFormulaPointer++;
                     
                     // Adds the variable to the list of variables only if it isn't already there
                     if (!_variables.Contains(normalize(newT)))
