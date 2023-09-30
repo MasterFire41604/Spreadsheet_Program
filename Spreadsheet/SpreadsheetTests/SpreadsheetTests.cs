@@ -339,7 +339,25 @@ namespace SpreadsheetTests
         }
 
         [TestMethod()]
+        public void TestValuesUpdatingProperly()
+        {
+            AbstractSpreadsheet s = new Spreadsheet(s => true, s => s.ToUpper(), "1");
+            s.SetContentsOfCell("A1", "5");
+            s.SetContentsOfCell("b1", "=a1-1");
+            s.SetContentsOfCell("C1", "=b1+A1");
 
+            Assert.AreEqual(5.0, s.GetCellValue("A1"));
+            Assert.AreEqual(4.0, s.GetCellValue("B1"));
+            Assert.AreEqual(9.0, s.GetCellValue("C1"));
+
+            s.SetContentsOfCell("A1", "100");
+
+            Assert.AreEqual(100.0, s.GetCellValue("A1"));
+            Assert.AreEqual(99.0, s.GetCellValue("B1"));
+            Assert.AreEqual(199.0, s.GetCellValue("C1"));
+        }
+
+        [TestMethod()]
         public void StressTest()
         {
             AbstractSpreadsheet s = new Spreadsheet(s => true, s => s.ToUpper(), "1");
