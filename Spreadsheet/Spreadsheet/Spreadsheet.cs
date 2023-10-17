@@ -99,6 +99,8 @@ namespace SS
 
         public override object GetCellContents(string name)
         {
+            name = normalizer(name);
+
             if (CheckNameValidity(name))
             {
                 if (Cells.ContainsKey(name))
@@ -130,9 +132,16 @@ namespace SS
 
         public override object GetCellValue(string name)
         {
+            name = normalizer(name);
+
             if (CheckNameValidity(name))
             {
-                return Cells[name].Value;
+                if (Cells.ContainsKey(name))
+                {
+                    return Cells[name].Value;
+                }
+
+                return "";
             }
 
             throw new InvalidNameException();
@@ -275,7 +284,7 @@ namespace SS
         {
             string legalVarNames = @"^[a-zA-Z_][a-zA-Z0-9_]*$";
 
-            if (Regex.IsMatch(name, legalVarNames) && validifier(normalizer(name)))
+            if (Regex.IsMatch(name, legalVarNames) && validifier(name))
             {
                 return true;
             }
